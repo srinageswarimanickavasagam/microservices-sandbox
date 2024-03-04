@@ -1,5 +1,8 @@
 # cloud-native-microservices-sample
 
+## Design patterns
+https://www.udemy.com/course/design-microservices-architecture-with-patterns-principles/
+
 ### Service Communication Patterns:
 1. API Gateway Pattern
 2. Gateway Routing/Aggregation/Offloading Pattern
