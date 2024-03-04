@@ -1,7 +1,9 @@
 package srinageswari.lEarn.productservice.exception;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class ProductServiceCustomException extends RuntimeException{
     private String errorCode;
