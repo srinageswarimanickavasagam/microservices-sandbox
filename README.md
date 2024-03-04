@@ -1,3 +1,18 @@
+# Technical references
+
+## Distributed tracing 
+sleuth -> micrometer migration<br>
+https://www.appsdeveloperblog.com/micrometer-and-zipkin-in-spring-boot/
+
+### Configurations 
+- add log specific configurations to config server
+- then pull and run the docker image 
+docker run -d -p 9411:9411 openzipkin/zipkin
+
+### How to check logs
+- http://localhost:9411/zipkin/
+- here we can simply click on run query or search by traceid. We can get the traceId from console during API call as well.
+
 # cloud-native-microservices-sample
 
 ## Design patterns
