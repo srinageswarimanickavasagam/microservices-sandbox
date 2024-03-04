@@ -6,4 +6,5 @@ import srinageswari.lEarn.paymentservice.entity.TransactionDetails;
 
 @Repository
 public interface PaymentRepository extends JpaRepository<TransactionDetails, Long> {
+    TransactionDetails findByOrderId(long orderId);
 }

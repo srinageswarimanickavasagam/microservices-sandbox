@@ -1,9 +1,10 @@
-package srinageswari.lEarn.paymentservice.model;
+package srinageswari.lEarn.orderservice.external;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import srinageswari.lEarn.orderservice.model.PaymentMode;
 
 import java.time.Instant;
 
