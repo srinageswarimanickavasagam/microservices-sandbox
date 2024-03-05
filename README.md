@@ -13,6 +13,9 @@ docker run -d -p 9411:9411 openzipkin/zipkin
 - http://localhost:9411/zipkin/
 - here we can simply click on run query or search by traceid. We can get the traceId from console during API call as well.
 
+## API Gateway
+- After adding API gateway, all the apis should be accessible with the port defined for API gateway
+
 # cloud-native-microservices-sample
 
 ## Design patterns
