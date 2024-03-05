@@ -5,7 +5,7 @@ sleuth -> micrometer migration<br>
 https://www.appsdeveloperblog.com/micrometer-and-zipkin-in-spring-boot/
 
 ### Configurations 
-- add log specific configurations to config server
+- add log specific configurations to config server and add required pom dependencies
 - then pull and run the docker image 
 docker run -d -p 9411:9411 openzipkin/zipkin
 
@@ -14,7 +14,7 @@ docker run -d -p 9411:9411 openzipkin/zipkin
 - here we can simply click on run query or search by traceid. We can get the traceId from console during API call as well.
 
 ## API Gateway
-- After adding API gateway, all the apis should be accessible with the port defined for API gateway.
+- After adding API gateway, all the apis should be accessible with the port defined for API gateway from the postman
 
 ### Circuit Breaker 
 - this is used to check if the requested service is up/down. we need to add circuit breaker to the calling service
@@ -22,12 +22,14 @@ docker run -d -p 9411:9411 openzipkin/zipkin
 - So we need to add circuit breaker to api gateway to check if order service is up/down and also add circuit breaker to order service to check condition of product/payment service.
 Status changes
 - to configure circuit breaker in api gateway, we just need to configure in application yml file. For order service, since we are using feign clients to access payment/product service we need to configure fallback methods for both the service
-
-### General working
-- On failure, closed to open that's when we need to call fallback method
-- After certain time, open to half open
-- If the requests pass during half open, status will change from half open to close or else will be changed to open again
+- bring down any of the service and validate if we are getting proper exception message
 - Reference: https://resilience4j.readme.io/docs/circuitbreaker
+
+### Rate limitter
+- Bring up redis image and add pom dependency
+- docker run -p 6379:6379 -d redis
+- also add the required configuration in gateway yml file
+- now if we hit the api from postman too many times, we will see this in status "429 Too Many Requests" with blank response instead of 200 ok
 
 
 # cloud-native-microservices-sample
