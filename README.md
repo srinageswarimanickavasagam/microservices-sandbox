@@ -14,7 +14,16 @@ docker run -d -p 9411:9411 openzipkin/zipkin
 - here we can simply click on run query or search by traceid. We can get the traceId from console during API call as well.
 
 ## API Gateway
-- After adding API gateway, all the apis should be accessible with the port defined for API gateway
+- After adding API gateway, all the apis should be accessible with the port defined for API gateway.
+
+### Circuit Breaker 
+- this is used to check if the requested service is up/down. we need to add circuit breaker to the calling service
+- For eg here we can API gateway from there we are making call to order service which internally calls product/payment service.
+- So we need to add circuit breaker to api gateway to check if order service is up/down and add circuit breaker to order service to check condition of product/payment service.
+Status changes
+- On failure, closed to open that's when we need to call fallback method
+- After certain time, open to half open
+- If the requests pass during half open, status will change from half open to close or else will be changed to open again
 
 # cloud-native-microservices-sample
 
