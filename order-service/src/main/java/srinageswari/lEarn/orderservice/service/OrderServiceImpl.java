@@ -17,8 +17,6 @@ import srinageswari.lEarn.orderservice.repository.OrderRepository;
 
 import java.time.Instant;
 
-import static org.springframework.http.RequestEntity.post;
-
 @Service
 @RequiredArgsConstructor
 @Log4j2
@@ -47,14 +45,10 @@ public class OrderServiceImpl implements OrderService {
         PaymentRequest paymentRequest = PaymentRequest.builder().orderId(order.getId()).paymentMode(orderReq.getPaymentMode()).amount(orderReq.getTotalAmount()).build();
         String orderStatus = null;
 
-        try {
-            paymentService.doPayment(paymentRequest);
-            log.info("Payment done Successfully. Changing the order status to placed");
-            orderStatus = "PLACED";
-        } catch (Exception e) {
-            log.info("Error occured in payment. Changing the order status to failed");
-            orderStatus = "FAILED";
-        }
+        paymentService.doPayment(paymentRequest);
+        log.info("Payment done Successfully. Changing the order status to placed");
+        orderStatus = "PLACED";
+
         order.setOrderStatus(orderStatus);
         orderRepository.save(order);
         log.info("Order placed successfully: {}", order);
@@ -69,10 +63,10 @@ public class OrderServiceImpl implements OrderService {
     public OrderResponse getOrderDetails(long orderId) {
         log.info("Get Order details for order Id: {}", orderId);
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new OrderServiceCustomException("Order not found for the orderId", "NOT FOUND", 404));
-        ProductResponse productResponse = restTemplate.getForObject("http://PRODUCT-SERVICE/product/"+order.getProductId(), ProductResponse.class);
+        ProductResponse productResponse = restTemplate.getForObject("http://PRODUCT-SERVICE/product/" + order.getProductId(), ProductResponse.class);
         assert productResponse != null;
         log.info("Getting payment info from payment service");
-        PaymentResponse paymentResponse = restTemplate.getForObject("http://PAYMENT-SERVICE/payment/"+orderId, PaymentResponse.class);
+        PaymentResponse paymentResponse = restTemplate.getForObject("http://PAYMENT-SERVICE/payment/" + orderId, PaymentResponse.class);
         OrderResponse.ProductDetails productDetails = OrderResponse.ProductDetails.builder().productId(productResponse.getProductId()).productName(productResponse.getProductName()).price(productResponse.getPrice()).build();
         assert paymentResponse != null;
         OrderResponse.PaymentDetails paymentDetails = OrderResponse.PaymentDetails.builder().paymentId(paymentResponse.getPaymentId()).paymentDate(paymentResponse.getPaymentDate()).paymentMode(paymentResponse.getPaymentMode()).status(paymentResponse.getStatus()).build();

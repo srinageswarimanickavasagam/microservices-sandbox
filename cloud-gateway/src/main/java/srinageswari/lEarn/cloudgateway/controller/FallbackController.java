@@ -21,6 +21,6 @@ public class FallbackController {
     @GetMapping("/productServiceFallBack")
     public String productServiceFallback()
     {
-        return "Order Service is down!";
+        return "Product Service is down!";
     }
 }
