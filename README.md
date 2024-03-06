@@ -43,9 +43,56 @@ Status changes
 - docker build -t smanickavasa/configserver:0.0.1 .
 - docker run -d -p9296:9296 -v C:/Users/smanickavasa/.ssh:/root/.ssh -e SSH_PRIVATE_KEY_PATH=/root/.ssh/personal_key -e EUREKA_SERVER_ADDRESS=http://host.docker.internal:8761/eureka --name configserver <imageId>
 
-#### API Gateway
+#### API Gateway 
 - docker build -t smanickavasa/cloudgateway:0.0.1 .
 - docker run -d -p9090:9090 -e CONFIG_SERVER_URL=host.docker.internal -e EUREKA_SERVER_ADDRESS=http://host.docker.internal:8761/eureka --name cloudgateway <imageId>
+
+### Docker image push
+#### How to login to docker hub
+- create docker hub account and login from command line using below command
+- docker login -u smanickavasa
+#### How to build and push (example)
+- generate jar by running command ``mvn clean install -D skipTests``
+- build image ``docker build -t smanickavasa/serviceregistry:0.0.1 . ``
+- push docker image to docker hub ``docker push smanickavasa/serviceregistry:0.0.1``
+
+### Automate image build and push
+Reference: https://github.com/GoogleContainerTools/jib/tree/master/jib-maven-plugin
+
+- Google's JIB Maven plugin to automate image building and pushing
+
+Copy the below content to the `settings.xml` file within the `.m2` folder:
+
+```xml
+<servers>
+  <server>
+      <id>registry.hub.docker.com</id>
+      <username>smanickavasa</username>
+      <password>Enter password</password>
+  </server>
+</servers>
+
+```
+Copy the below content to the `pom.xml` file of the project
+
+```xml
+<plugin>
+    <groupId>com.google.cloud.tools</groupId>
+    <artifactId>jib-maven-plugin</artifactId>
+    <configuration>
+        <from>
+            <image>openjdk:17</image>
+        </from>
+        <to>
+            <image>registry.hub.docker.com/smanickavasa/${project.artifactId}</image>
+            <tags>${project.version}</tags>
+        </to>
+    </configuration>
+</plugin>
+```
+- Now run the mvn command, this will create and push image to docker hub<br>
+mvn clean install -D skipTests jib:build
+
 
 # cloud-native-microservices-sample
 
