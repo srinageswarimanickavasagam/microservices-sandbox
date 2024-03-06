@@ -9,4 +9,15 @@ spring:
       server:
         git:
           uri: git@github.com:srinageswari/spring-app-config.git
+          privateKey: ${SSH_PRIVATE_KEY_PATH}
+          hostKey: github.com
           clone-on-start: true
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: ${EUREKA_SERVER_ADDRESS:http://localhost:8761/eureka}

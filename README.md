@@ -31,6 +31,21 @@ Status changes
 - also add the required configuration in gateway yml file
 - now if we hit the api from postman too many times, we will see this in status "429 Too Many Requests" with blank response instead of 200 ok
 
+## Docker & Kubernetes
+
+### Build & run commands
+
+#### Service registry
+- docker build -t smanickavasa/serviceregistry:0.0.1 .
+- docker run -d -p8761:8761 --name serviceregistry <imageId>
+
+#### Config server [need to set ssh private key path and eureka server address as env variable]
+- docker build -t smanickavasa/configserver:0.0.1 .
+- docker run -d -p9296:9296 -v C:/Users/smanickavasa/.ssh:/root/.ssh -e SSH_PRIVATE_KEY_PATH=/root/.ssh/personal_key -e EUREKA_SERVER_ADDRESS=http://host.docker.internal:8761/eureka --name configserver <imageId>
+
+#### API Gateway
+- docker build -t smanickavasa/cloudgateway:0.0.1 .
+- docker run -d -p9090:9090 -e CONFIG_SERVER_URL=host.docker.internal -e EUREKA_SERVER_ADDRESS=http://host.docker.internal:8761/eureka --name cloudgateway <imageId>
 
 # cloud-native-microservices-sample
 
