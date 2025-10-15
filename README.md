@@ -13,6 +13,7 @@ docker run -d -p 9411:9411 openzipkin/zipkin
 - http://localhost:9411/zipkin/
 - here we can simply click on run query or search by traceid. We can get the traceId from console during API call as well.
 
+[Resilience4j](https://www.youtube.com/watch?v=IqDDw6ZhhgY&list=PL4TnYdea-xTLGklgQfWW8ZgpQXm8-FOHt&index=8)
 ## API Gateway
 - After adding API gateway, all the apis should be accessible with the port defined for API gateway from the postman
 
