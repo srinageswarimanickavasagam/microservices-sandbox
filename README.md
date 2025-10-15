@@ -44,6 +44,7 @@ Status changes
 #### API Gateway 
 - docker build -t smanickavasa/cloudgateway:0.0.1 .
 - docker run -d -p9090:9090 -e CONFIG_SERVER_URL=host.docker.internal -e EUREKA_SERVER_ADDRESS=http://host.docker.internal:8761/eureka --name cloudgateway <imageId>
+-- Kong API Gateway https://www.youtube.com/watch?v=tagH5k7nBQ0
 
 # cloud-native-microservices-sample
 
